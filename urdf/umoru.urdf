@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version:   Build Version: 1.6.9177.32434
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="umoru">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.245938434156469 0.00263031624021073 0.761562315157989"
+        rpy="0 0 0" />
+      <mass
+        value="29.1778131878809" />
+      <inertia
+        ixx="10.958620554983"
+        ixy="-0.00753456944918631"
+        ixz="-1.14383455154732"
+        iyy="10.3589688983453"
+        iyz="-0.00154431750437142"
+        izz="9.67004496467483" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/base_link.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/base_link.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="r_shoulder_link">
+    <inertial>
+      <origin
+        xyz="0.0898037632676383 0.00253554614932183 -0.00522323459186413"
+        rpy="0 0 0" />
+      <mass
+        value="0.181420829885811" />
+      <inertia
+        ixx="0.000116094943295756"
+        ixy="6.51171424784999E-06"
+        ixz="-2.80125945227249E-06"
+        iyy="0.000102149006497476"
+        iyz="3.95231940231628E-07"
+        izz="8.73855156207236E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.249999999999974 0.33149999999999 -0.940000000000002"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_shoulder_link.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.249999999999974 0.33149999999999 -0.940000000000002"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_shoulder_link.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_shoulder_joint"
+    type="revolute">
+    <origin
+      xyz="0.249999999999974 -0.33149999999999 0.940000000000002"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="r_shoulder_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_elbow_link0">
+    <inertial>
+      <origin
+        xyz="0.0466448947730179 0.000156287018724999 -3.56998822392818E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0628392286764867" />
+      <inertia
+        ixx="6.61808971708481E-05"
+        ixy="1.30179458104364E-07"
+        ixz="-1.04527570652944E-09"
+        iyy="9.05993150062653E-05"
+        iyz="8.65305821785955E-10"
+        izz="6.68087944399704E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.379999999999978 0.331499999999983 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link0.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.379999999999978 0.331499999999983 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link0.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_elbow_joint0"
+    type="revolute">
+    <origin
+      xyz="0.130000000000004 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="r_shoulder_link" />
+    <child
+      link="r_elbow_link0" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_elbow_link1">
+    <inertial>
+      <origin
+        xyz="0.0466448947730183 0.000156287018736045 -3.56998822059751E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.062839228676488" />
+      <inertia
+        ixx="6.61808984830392E-05"
+        ixy="1.30179328835172E-07"
+        ixz="-1.04518496132762E-09"
+        iyy="9.05993168918464E-05"
+        iyz="8.65411571059937E-10"
+        izz="6.68087925393495E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.459999999999978 0.331499999999993 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link1.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.459999999999978 0.331499999999993 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link1.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_elbow_joint1"
+    type="revolute">
+    <origin
+      xyz="0.08 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="r_elbow_link0" />
+    <child
+      link="r_elbow_link1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_elbow_link2">
+    <inertial>
+      <origin
+        xyz="0.0466448947730179 0.000156287018735879 -3.56998822170773E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0628392286764873" />
+      <inertia
+        ixx="6.61808984830383E-05"
+        ixy="1.301793288358E-07"
+        ixz="-1.04518496186921E-09"
+        iyy="9.05993168918457E-05"
+        iyz="8.65411570706405E-10"
+        izz="6.68087925393489E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.539999999999978 0.331499999999993 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link2.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.539999999999978 0.331499999999993 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link2.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_elbow_joint2"
+    type="revolute">
+    <origin
+      xyz="0.08 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="r_elbow_link1" />
+    <child
+      link="r_elbow_link2" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_elbow_link3">
+    <inertial>
+      <origin
+        xyz="0.0466448947730181 0.000156287018735823 -3.56998822059751E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0628392286764876" />
+      <inertia
+        ixx="6.61808984830392E-05"
+        ixy="1.30179328835536E-07"
+        ixz="-1.04518496133676E-09"
+        iyy="9.05993168918467E-05"
+        iyz="8.65411570771082E-10"
+        izz="6.68087925393498E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.619999999999978 0.331499999999993 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link3.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.619999999999978 0.331499999999993 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link3.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_elbow_joint3"
+    type="revolute">
+    <origin
+      xyz="0.08 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="r_elbow_link2" />
+    <child
+      link="r_elbow_link3" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_elbow_link4">
+    <inertial>
+      <origin
+        xyz="0.0490555640624756 0.00501268384154441 -4.21888739166043E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0780612213761367" />
+      <inertia
+        ixx="8.34448242368713E-05"
+        ixy="4.44948160954552E-06"
+        ixz="-4.71762537243713E-13"
+        iyy="6.39305524922981E-05"
+        iyz="-3.20612796383613E-11"
+        izz="4.99291612558271E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.699999999999978 0.331499999999993 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link4.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.699999999999978 0.331499999999993 -0.940000000000286"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/r_elbow_link4.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_elbow_joint4"
+    type="revolute">
+    <origin
+      xyz="0.08 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="r_elbow_link3" />
+    <child
+      link="r_elbow_link4" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_shoulder_link">
+    <inertial>
+      <origin
+        xyz="0.0898037632677828 0.00253554614899493 -0.00522323459157525"
+        rpy="0 0 0" />
+      <mass
+        value="0.181420829885481" />
+      <inertia
+        ixx="0.000116094943295568"
+        ixy="6.51171424778503E-06"
+        ixz="-2.80125945258428E-06"
+        iyy="0.000102149006497349"
+        iyz="3.95231940911038E-07"
+        izz="8.73855156205857E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.249999999999974 -0.3315 -0.940000000000002"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_shoulder_link.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.249999999999974 -0.3315 -0.940000000000002"
+        rpy="1.5707963267949 0 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_shoulder_link.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_shoulder_joint"
+    type="continuous">
+    <origin
+      xyz="0.249999999999974 0.3315 0.940000000000002"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="l_shoulder_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="l_elbow_link0">
+    <inertial>
+      <origin
+        xyz="0.0466448947730141 -0.000156287018721002 3.56998822059751E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0628392286764886" />
+      <inertia
+        ixx="6.61808891756007E-05"
+        ixy="-1.30188239931639E-07"
+        ixz="1.01336674259307E-09"
+        iyy="9.05991966558929E-05"
+        iyz="7.3677841916099E-10"
+        izz="6.68089089818205E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.379999999999977 -0.331499999999985 -0.940000000000286"
+        rpy="1.5707963267949 2.14961238538532E-17 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link0.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.379999999999977 -0.331499999999985 -0.940000000000286"
+        rpy="1.5707963267949 2.14961238538532E-17 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link0.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_elbow_joint0"
+    type="revolute">
+    <origin
+      xyz="0.130000000000004 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="l_shoulder_link" />
+    <child
+      link="l_elbow_link0" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_elbow_link1">
+    <inertial>
+      <origin
+        xyz="0.0466448947730186 -0.00015628701873599 3.56998821837706E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0628392286764886" />
+      <inertia
+        ixx="6.61808891756007E-05"
+        ixy="-1.30188239930884E-07"
+        ixz="1.01336674162659E-09"
+        iyy="9.05991966558939E-05"
+        iyz="7.36778419705595E-10"
+        izz="6.68089089818205E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.459999999999974 -0.3315 -0.940000000000286"
+        rpy="1.5707963267949 3.26830215106044E-17 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link1.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.459999999999974 -0.3315 -0.940000000000286"
+        rpy="1.5707963267949 3.26830215106044E-17 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link1.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_elbow_joint1"
+    type="revolute">
+    <origin
+      xyz="0.0799999999999962 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="l_elbow_link0" />
+    <child
+      link="l_elbow_link1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_elbow_link2">
+    <inertial>
+      <origin
+        xyz="0.0466448947730179 -0.000156287018735324 3.56998821948729E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0628392286764859" />
+      <inertia
+        ixx="6.61808971708478E-05"
+        ixy="-1.30179458103277E-07"
+        ixz="1.04527570579418E-09"
+        iyy="9.05993150062653E-05"
+        iyz="8.65305821595339E-10"
+        izz="6.68087944399701E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.539999999999974 -0.3315 -0.940000000000286"
+        rpy="1.5707963267949 -3.7974877366948E-17 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link2.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.539999999999974 -0.3315 -0.940000000000286"
+        rpy="1.5707963267949 -3.7974877366948E-17 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link2.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_elbow_joint2"
+    type="revolute">
+    <origin
+      xyz="0.0800000000000001 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="l_elbow_link1" />
+    <child
+      link="l_elbow_link2" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_elbow_link3">
+    <inertial>
+      <origin
+        xyz="0.0466448947730183 -0.000156287018736156 3.56998822281795E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0628392286764886" />
+      <inertia
+        ixx="6.61808904877922E-05"
+        ixy="-1.30188110662275E-07"
+        ixz="1.01327599825826E-09"
+        iyy="9.05991985414755E-05"
+        iyz="7.36884168781024E-10"
+        izz="6.68089070811978E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.619999999999973 -0.3315 -0.940000000000286"
+        rpy="1.5707963267949 1.3646945104727E-17 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link3.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.619999999999973 -0.3315 -0.940000000000286"
+        rpy="1.5707963267949 1.3646945104727E-17 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link3.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_elbow_joint3"
+    type="revolute">
+    <origin
+      xyz="0.0799999999999996 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="l_elbow_link2" />
+    <child
+      link="l_elbow_link3" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_elbow_link4">
+    <inertial>
+      <origin
+        xyz="0.0490555640624749 -0.00501268384154402 4.21888738832976E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0780612213761366" />
+      <inertia
+        ixx="8.34448242368722E-05"
+        ixy="-4.4494816095457E-06"
+        ixz="4.71762227847757E-13"
+        iyy="6.39305524922983E-05"
+        iyz="-3.20612794751776E-11"
+        izz="4.99291612558277E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.699999999999973 -0.3315 -0.940000000000286"
+        rpy="1.5707963267949 1.61497758136519E-16 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link4.3dxml" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.699999999999973 -0.3315 -0.940000000000286"
+        rpy="1.5707963267949 1.61497758136519E-16 -1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://umoru/meshes/l_elbow_link4.3dxml" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_elbow_joint4"
+    type="revolute">
+    <origin
+      xyz="0.0800000000000002 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="l_elbow_link3" />
+    <child
+      link="l_elbow_link4" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>
