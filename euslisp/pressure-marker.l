@@ -1,67 +1,37 @@
-(load "package://umoru/urdf/umoru.l")
-(ros::roseus-add-msgs "visualization_msgs")
+(load "barrel.l")
 
-;; initialize robot
-(umoru)
-(dolist (j (send *umoru* :joint-list))
-  (send j :min-angle -135)
-  (send j :max-angle 135))
-(defun hug-pose()
-  (dolist (j (send *umoru* :joint-list))
-    (when (substringp "r_elbow" (send j :name))
-      (send j :joint-angle -20))
-    (when (substringp "l_elbow" (send j :name))
-      (send j :joint-angle 20)))
-)
-(defun reset-pose()
-  (dolist (j (send *umoru* :joint-list))
-    (send j :joint-angle 0)))
-(defun init-pose()
-  (send *umoru* :r_shoulder_joint :joint-angle 90)
-  (send *umoru* :l_shoulder_joint :joint-angle -90))
+(defclass pressure-marker
+  :slots (robot-model marker-list))
 
-(defun make-hollow-cylinder (outer inner height)
-  (let ((solid (make-cylinder outer height))
-        (hole (make-cylinder inner (+ height 20))))
-    (send hole :translate #f(0 0 -10))
-    (setq hollow (body- solid hole))
-    hollow))
+(defmethod pressure-marker
+  (:init
+    (robot)
+    (setq robot-model robot)
+    (send self :initialize-markers))
 
-;; create markers
-(setq *marker-list* nil)
-(dolist (lk (send *umoru* :links))
-  (when (and (substringp "elbow" (send lk :name)) (not (substringp "4" (send lk :name))))
-    (setq coords (send lk :copy-worldcoords))
-    (setq cyl (make-hollow-cylinder 70 40 60))
-    (send cyl :newcoords coords)
-    (send cyl :rotate (deg2rad 90) :y)
-    (send cyl :translate (float-vector 10 0 0) :world)
-    (send cyl :set-color #f(0 0.2 0.7 0.7))
-    (send lk :assoc cyl)
-    (setq *marker-list* (acons (send lk :name) cyl *marker-list*)))
-  )
-(setq l (append (list *umoru*) (mapcar #'cdr *marker-list*)))
-
-;; initialize viewer
-(unless (boundp '*irtviewer*)
-  (make-irtviewer))
-(send *irtviewer* :viewer :viewing :look #f(6006.5 2694.47 2523.4) #f(98.9507 64.2593 669.127) #f(0.0 0.0 1.0))
-(send *irtviewer* :objects l)
-(send *irtviewer* :draw-objects)
-
-;; ros
-(ros::roseus "visualize_marker")
-(defun marker-cb (msg)
-  (dolist (marker (send msg :markers))
-    (let ((name (send marker :ns)) (rgba (send marker :color)))
-      (setq target (cdr (assoc name *marker-list* :test #'string-equal)))
-      (send target :set-color (float-vector (send rgba :r) (send rgba :g) (send rgba :b))
-            (send rgba :a))
+  (:initialize-markers
+    ()
+    (setq marker-list nil)
+    (dolist (lk (send robot-model :links))
+      (when (and (substringp "elbow" (send lk :name))
+                 (not (substringp "4" (send lk :name))))
+        (setq coords (send lk :copy-worldcoords))
+        (setq cyl (make-barrel 75 40 120))
+        (send cyl :newcoords coords)
+        (send cyl :rotate (deg2rad 90) :y)
+        (send cyl :translate (float-vector 45 0 0) :world)
+        (send cyl :set-color #f(0 0.2 0.7 0.7))
+        (send lk :assoc cyl)
+        (setq marker-list (acons (send lk :name) cyl marker-list)))
       ))
-  (send *irtviewer* :draw-objects))
-(ros::subscribe "marker" visualization_msgs::MarkerArray #'marker-cb)
 
-(do-until-key
- (ros::spin-once)
- (x::window-main-one)
- )
+  (:marker-object
+    ()
+    (mapcar #'cdr marker-list))
+
+  (:set-color
+    (name rgb &optional (a 1.0))
+    (setq target (cdr (assoc name marker-list :test #'string-equal)))
+    (send target :set-color rgb a))
+
+  )
