@@ -1,0 +1,43 @@
+(load "pressure-marker.l")
+(load "../urdf/umoru.l")
+
+(unless (boundp '*irtviewer*)
+  (make-irtviewer))
+(send *irtviewer* :viewer :viewing :look #f(6006.5 2694.47 2523.4) #f(98.9507 64.2593 669.127) #f(0.0 0.0 1.0))
+(send *irtviewer* :change-background #f(0.5 0.5 0.5))
+
+(umoru)
+(setq *pm* (instance pressure-marker :init *umoru*))
+
+
+(defun viewer-update
+  ()
+  (let ((l (send *pm* :marker-object)))
+    (send *irtviewer* :objects (append (list *umoru*) l))
+    (send *irtviewer* :draw-objects)))
+
+(defun test
+  ()
+  (let ((size-list #f(0 0 0 0))
+        (add-list (list t t t t)))
+    (dotimes (i 15)
+      (setf (elt size-list 0) (* i 0.1))
+      (setf (elt size-list 1) (* (max 0 (- i 5)) 0.1))
+      (setf (elt size-list 2) (* (max 0 (- i 10)) 0.1))
+      (setf (elt size-list 3) (* (max 0 (- i 15)) 0.1))
+      (dotimes (j 4)
+        (send *pm* :change-size (format nil "r_elbow_link~A" j) (elt size-list j)))
+      )
+    (dotimes (i 300)
+      (dotimes (j 4)
+        (if (elt add-list j)
+            (setq new-size (+ (elt size-list j) 0.1))
+            (setq new-size (- (elt size-list j) 0.1)))
+        (when (>= new-size 2.0)
+          (setf (elt add-list j) nil))
+        (when (<= new-size 0)
+          (setf (elt add-list j) t))
+        (setf (elt size-list j) new-size)
+        (send *pm* :change-size (format nil "r_elbow_link~A" j) (elt size-list j)))
+      (viewer-update)
+      )))
