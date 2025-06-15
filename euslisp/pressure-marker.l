@@ -1,7 +1,7 @@
 (load "barrel.l")
 
 (defclass pressure-marker
-  :slots (robot-model marker-list))
+  :slots (robot-model marker-tb))
 
 (defmethod pressure-marker
   (:init
@@ -18,7 +18,10 @@
 
   (:marker-object
     ()
-    (mapcar #'cdr marker-list))
+    (let ((value-list nil))
+      (maphash #'(lambda (key val) (push val value-list))
+               marker-tb)
+      (nreverse value-list)))
 
   (:make-marker
     (coords size color)
@@ -32,7 +35,7 @@
 
   (:initialize-markers
     ()
-    (setq marker-list nil)
+    (setq marker-tb (make-hash-table :test #'string-equal))
     (dolist (lk (send robot-model :links))
       (when (and (substringp "elbow" (send lk :name))
                  (not (substringp "4" (send lk :name))))
@@ -41,29 +44,29 @@
           (send cyl :rotate (deg2rad 90) :y)
           (send cyl :translate (float-vector 45 0 0) :world)
           (send lk :assoc cyl)
-          (setq marker-list (acons (send lk :name) cyl marker-list)))
+          (sethash (send lk :name) marker-tb cyl)
+          )
         )))
 
   (:change-size
     (name size)
-    (let ((pair (assoc name marker-list :test #'string-equal)))
-      (when pair
-        (let* ((old-marker (cdr pair))
-               (color (send old-marker :get :color))
-               (coords (send old-marker :worldcoords))
+    (let ((old-cyl (gethash name marker-tb)))
+      (when old-cyl
+        (let* ((color (send old-cyl :get :color))
+               (coords (send old-cyl :worldcoords))
                (link (send self :get-link-by-name name))
                (new-cyl (send self :make-marker coords size color)))
           ;; update assoc
           (when link
-            (send link :dissoc old-marker)
+            (send link :dissoc old-cyl)
             (send link :assoc new-cyl))
-          ;; update marker-list
-          (setf (cdr pair) new-cyl)
+          ;; update marker-tb
+          (setf (gethash name marker-tb) new-cyl)
           ))))
 
   (:set-color
     (name &key rgb a)
-    (let ((target (cdr (assoc name marker-list :test #'string-equal))))
+    (let ((target (gethash name marker-tb)))
       (when target
         (let ((new-color (copy-seq (send target :get :color))))
           (when rgb
