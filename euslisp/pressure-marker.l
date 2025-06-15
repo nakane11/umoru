@@ -22,7 +22,9 @@
 
   (:make-marker
     (coords size color)
-    (setq cyl (make-barrel 75 size 120))
+    (setq barrel (+ 45 (* 25 (min 1.0 size))))
+    (setq arc (- 120 (* 80 (min 1 (max 0 (- size 1))))));;1.0~2.0
+    (setq cyl (make-barrel 75 barrel arc))
     (send cyl :newcoords coords)
     (send cyl :set-color color)
     (send cyl :put :color color)
@@ -35,14 +37,14 @@
       (when (and (substringp "elbow" (send lk :name))
                  (not (substringp "4" (send lk :name))))
         (let* ((coords (send lk :copy-worldcoords))
-               (cyl (send self :make-marker coords 40 #f(0 0.2 0.7 0.7))))
+               (cyl (send self :make-marker coords 0 #f(0.65 0.65 1.0 0.6))))
           (send cyl :rotate (deg2rad 90) :y)
           (send cyl :translate (float-vector 45 0 0) :world)
           (send lk :assoc cyl)
           (setq marker-list (acons (send lk :name) cyl marker-list)))
         )))
 
-  (:set-size
+  (:change-size
     (name size)
     (let ((pair (assoc name marker-list :test #'string-equal)))
       (when pair
