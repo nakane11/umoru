@@ -30,7 +30,6 @@
     (setq cyl (make-barrel 75 barrel arc))
     (send cyl :newcoords coords)
     (send cyl :set-color color)
-    (send cyl :put :color color)
     cyl)
 
   (:initialize-markers
@@ -52,7 +51,7 @@
     (name size)
     (let ((old-cyl (gethash name marker-tb)))
       (when old-cyl
-        (let* ((color (send old-cyl :get :color))
+        (let* ((color (send old-cyl :get :face-color))
                (coords (send old-cyl :worldcoords))
                (link (send self :get-link-by-name name))
                (new-cyl (send self :make-marker coords size color)))
@@ -68,11 +67,11 @@
     (name &key rgb a)
     (let ((target (gethash name marker-tb)))
       (when target
-        (let ((new-color (copy-seq (send target :get :color))))
+        (let ((new-color (copy-seq (send target :get :face-color))))
           (when rgb
             (replace new-color rgb :end1 3))
           (when a
             (setf (elt new-color 3) a))
           (send target :set-color new-color)
-          (send target :put :color new-color)))))
+          ))))
   )
