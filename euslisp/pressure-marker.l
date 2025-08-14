@@ -1,4 +1,5 @@
-(load "barrel.l")
+;; (load "barrel.l")
+(load "airbag.l")
 
 (defclass pressure-marker
   :slots (robot-model marker-tb))
@@ -25,10 +26,12 @@
 
   (:make-marker
     (coords size color)
-    (setq barrel (+ 45 (* 25 (min 1.0 size))))
-    (setq arc (- 120 (* 80 (min 1 (max 0 (- size 1))))));;1.0~2.0
-    (setq cyl (make-barrel 75 barrel arc))
+    ;; (setq barrel (+ 45 (* 25 (min 1.0 size))))
+    ;; (setq arc (- 120 (* 80 (min 1 (max 0 (- size 1))))));;1.0~2.0
+    ;; (setq cyl (make-barrel 75 barrel arc))
+    (setq cyl (make-airbag))
     (send cyl :newcoords coords)
+    ;; (send cyl :rotate (deg2rad 90) :x :world)
     (send cyl :set-color color)
     cyl)
 
@@ -41,6 +44,12 @@
         (let* ((coords (send lk :copy-worldcoords))
                (cyl (send self :make-marker coords 0 #f(0.65 0.65 1.0 0.6))))
           (send cyl :rotate (deg2rad 90) :y)
+          (when (substringp "r_" (send lk :name))
+            (send cyl :translate (float-vector 0 15 0))
+            (send cyl :rotate (deg2rad 90) :z))
+          (when (substringp "l_" (send lk :name))
+            (send cyl :translate (float-vector 0 -15 0))
+            (send cyl :rotate (deg2rad -90) :z))
           (send cyl :translate (float-vector 45 0 0) :world)
           (send lk :assoc cyl)
           (sethash (send lk :name) marker-tb cyl)
