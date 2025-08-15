@@ -42,7 +42,7 @@
       (when (and (substringp "elbow" (send lk :name))
                  (not (substringp "4" (send lk :name))))
         (let* ((coords (send lk :copy-worldcoords))
-               (cyl (send self :make-marker coords 0 #f(0.65 0.65 1.0 0.6))))
+               (cyl (send self :make-marker coords 0 #f(0.0 0.5 0.5 0.7))))
           (send cyl :rotate (deg2rad 90) :y)
           (when (substringp "r_" (send lk :name))
             (send cyl :translate (float-vector 0 15 0))
@@ -55,10 +55,10 @@
           (sethash (send lk :name) marker-tb cyl)
           )
         ))
-    (send self :set-color "l_elbow_link0" :rgb (float-vector (/ 247.0 255) (/ 150.0 255) (/ 70.0 255)))
-    (send self :set-color "l_elbow_link1" :rgb (float-vector (/ 75.0 255) (/ 172.0 255) (/ 198.0 255)))
-    (send self :set-color "l_elbow_link2" :rgb (float-vector (/ 128.0 255) (/ 100.0 255) (/ 162.0 255)))
-    (send self :set-color "l_elbow_link3" :rgb (float-vector (/ 155.0 255) (/ 187.0 255) (/ 89.0 255)))
+    ;; (send self :set-color "l_elbow_link0" :rgb (float-vector (/ 247.0 255) (/ 150.0 255) (/ 70.0 255)))
+    ;; (send self :set-color "l_elbow_link1" :rgb (float-vector (/ 75.0 255) (/ 172.0 255) (/ 198.0 255)))
+    ;; (send self :set-color "l_elbow_link2" :rgb (float-vector (/ 128.0 255) (/ 100.0 255) (/ 162.0 255)))
+    ;; (send self :set-color "l_elbow_link3" :rgb (float-vector (/ 155.0 255) (/ 187.0 255) (/ 89.0 255)))
     )
 
   (:change-size
