@@ -1,0 +1,86 @@
+(load "lightsource.l")
+(load "pressure-marker.l")
+(load "../urdf/umoru.l")
+(ros::roseus-add-msgs "std_msgs")
+
+(defclass ros-visualize-pressure
+  :slots (pm topic-tb))
+
+(defmethod ros-visualize-pressure
+  (:init
+    ()
+    (unless (boundp '*irtviewer*)
+      (make-irtviewer))
+    ;; (send *irtviewer* :viewer :viewing :look #f(6006.5 2694.47 2523.4) #f(98.9507 64.2593 669.127) #f(0.0 0.0 1.0))
+    (send *irtviewer* :viewer :viewing :look #f(7367.19 -6884.29 5935.51) #f(-173.266 147.302 682.164) #f(0.0 0.0 1.0))
+    ;; (send *irtviewer* :change-background #f(0.5 0.5 0.5))
+    (umoru)
+    (setq pm (instance pressure-marker :init *umoru*))
+    (setq topic-tb (make-hash-table :test #'eq))
+    (sethash 47 topic-tb "l_elbow_link0")
+    (sethash 49 topic-tb "l_elbow_link1")
+    (sethash 51 topic-tb "l_elbow_link2")
+    (sethash 53 topic-tb "l_elbow_link3")
+    (dolist (id (list 47 49 51 53))
+      (ros::subscribe (format nil "scaled_pressure/~A" id) std_msgs::Float32 `(lambda-closure nil 0 0 (msg) (send ,self :pressure-cb msg ,id))))
+      )
+    
+  (:viewer-update
+    ()
+    (let ((l (send pm :marker-object)))
+      (send *irtviewer* :objects (append (list *umoru*) l))
+      (send *irtviewer* :draw-objects)))
+
+  (:pressure-to-alpha
+    (val)
+    (min 1.0 (* val 1.6)))
+
+  (:pressure-cb
+   (msg id)
+   ;; (print id)
+   (setq name (gethash id topic-tb))
+   (send pm :set-color name :a (send self :pressure-to-alpha (send msg :data)))
+   ;; (send self :viewer-update)
+   )
+  )
+  
+
+(ros::roseus "visualize_marker")
+(setq *vis* (instance ros-visualize-pressure :init))
+(ros::rate 20)
+(do-until-key
+ (ros::spin-once)
+ (send *vis* :viewer-update)
+ (x::window-main-one)
+ (ros::sleep)
+ )
+
+;; (defun test
+;;   ()
+;;   (let ((size-list #f(0 0 0 0))
+;;         (add-list (list t t t t)))
+;;     ;; (send *irtviewer* :logging :start)
+;;     (dotimes (i 15)
+;;       (setf (elt size-list 0) (* i 0.1))
+;;       (setf (elt size-list 1) (* (max 0 (- i 5)) 0.1))
+;;       (setf (elt size-list 2) (* (max 0 (- i 10)) 0.1))
+;;       (setf (elt size-list 3) (* (max 0 (- i 15)) 0.1))
+;;       (dotimes (j 4)
+;;         (send *pm* :change-size (format nil "r_elbow_link~A" j) (elt size-list j)))
+;;       )
+;;     (dotimes (i 145)
+;;       (dotimes (j 4)
+;;         (if (elt add-list j)
+;;             (setq new-size (+ (elt size-list j) 0.1))
+;;             (setq new-size (- (elt size-list j) 0.1)))
+;;         (when (>= new-size 2.0)
+;;           (setf (elt add-list j) nil))
+;;         (when (<= new-size 0)
+;;           (setf (elt add-list j) t))
+;;         (setf (elt size-list j) new-size)
+;;         (send *pm* :change-size (format nil "r_elbow_link~A" j) (elt size-list j)))
+;;       (viewer-update)
+;;       ))
+;;   ;; (send *irtviewer* :logging :stop)
+;;   ;; (send *irtviewer* :save-animgif :transparent nil)
+;;   )

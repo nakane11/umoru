@@ -54,7 +54,12 @@
           (send lk :assoc cyl)
           (sethash (send lk :name) marker-tb cyl)
           )
-        )))
+        ))
+    (send self :set-color "l_elbow_link0" :rgb (float-vector (/ 247.0 255) (/ 150.0 255) (/ 70.0 255)))
+    (send self :set-color "l_elbow_link1" :rgb (float-vector (/ 75.0 255) (/ 172.0 255) (/ 198.0 255)))
+    (send self :set-color "l_elbow_link2" :rgb (float-vector (/ 128.0 255) (/ 100.0 255) (/ 162.0 255)))
+    (send self :set-color "l_elbow_link3" :rgb (float-vector (/ 155.0 255) (/ 187.0 255) (/ 89.0 255)))
+    )
 
   (:change-size
     (name size)
